@@ -8,8 +8,10 @@ import {
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
     Platform,
-    Keyboard,
+    Keyboard, Alert,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { Button } from "../components/Button";
 
 import colors from "../styles/colors";
@@ -23,8 +25,23 @@ export const UserIdentification = () => {
 
     const navigation = useNavigation();
 
-    const handleSubmit = () => {
-        navigation.navigate("Confirmation")
+    const handleSubmit = async () => {
+        if(!name)
+            return Alert.alert("Me diz como chamar você 😥️");
+
+        try {
+            await AsyncStorage.setItem("@plantmanager:user", name);
+            navigation.navigate("Confirmation", {
+                title: "Prontinho",
+                subtitle: "Vamos começar a cuidar das suas plantinhas com muito cuidado",
+                buttonTitle: "Começar",
+                icon: "smile",
+                nextScreen: "PlantSelect"
+            })
+        } catch {
+             Alert.alert("Não foi possível salvar o seu nome. 😥️");
+        }
+
     }
     const handleInputBlur = () => {
         setIsFocused(false)
