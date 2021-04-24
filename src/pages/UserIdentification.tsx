@@ -32,7 +32,7 @@ export const UserIdentification = () => {
         try {
             await AsyncStorage.setItem("@plantmanager:user", name);
             navigation.navigate("Confirmation", {
-                title: "Prontinho",
+                title: `Prontinho, ${name}`,
                 subtitle: "Vamos começar a cuidar das suas plantinhas com muito cuidado",
                 buttonTitle: "Começar",
                 icon: "smile",
